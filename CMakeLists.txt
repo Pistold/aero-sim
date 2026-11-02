@@ -11,7 +11,8 @@ add_library(aero_core
   src/sensor.cpp
   src/tracker.cpp
   src/anomaly.cpp
-  src/event_log.cpp)
+  src/event_log.cpp
+  include/aero/tracker.hpp)
 target_include_directories(aero_core PUBLIC include)
 if(MSVC)
   target_compile_options(aero_core PRIVATE /W4)
