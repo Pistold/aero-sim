@@ -60,3 +60,16 @@ for _, e in evt.iterrows():
 plt.tight_layout()
 plt.savefig("mission_overview.png", dpi=120)
 print("\nSaved mission_overview.png")
+
+# ---- Tracking error over time: raw sensor vs Kalman track ----
+fig2, axes = plt.subplots(2, 2, figsize=(13, 8), sharex=True)
+for a, (aid, g) in zip(axes.flat, tel.groupby("id")):
+    a.plot(g.t, g.meas_err_m, color="tab:gray", alpha=0.6, label="raw sensor")
+    a.plot(g.t, g.trk_err_m, color="tab:blue", label="Kalman track")
+    a.set(title=f"{aid}: position error (m)")
+    a.grid(alpha=0.3); a.legend()
+for a in axes[1]:
+    a.set_xlabel("t (s)")
+plt.tight_layout()
+plt.savefig("tracking_error.png", dpi=120)
+print("Saved tracking_error.png")
