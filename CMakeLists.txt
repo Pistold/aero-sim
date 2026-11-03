@@ -9,16 +9,17 @@ add_library(aero_core
   src/geo.cpp
   src/aircraft.cpp
   src/sensor.cpp
+  src/kalman.cpp
   src/tracker.cpp
   src/anomaly.cpp
-  src/event_log.cpp
-  include/aero/tracker.hpp)
+  src/event_log.cpp)
 target_include_directories(aero_core PUBLIC include)
 if(MSVC)
   target_compile_options(aero_core PRIVATE /W4)
 else()
   target_compile_options(aero_core PRIVATE -Wall -Wextra -Wpedantic)
 endif()
+
 add_executable(aero_sim src/main.cpp)
 target_link_libraries(aero_sim PRIVATE aero_core)
 
@@ -31,7 +32,7 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 enable_testing()
-add_executable(aero_tests tests/test_geo.cpp tests/test_anomaly.cpp tests/test_aircraft.cpp)
+add_executable(aero_tests tests/test_geo.cpp tests/test_anomaly.cpp tests/test_aircraft.cpp tests/test_tracker.cpp)
 target_link_libraries(aero_tests PRIVATE aero_core GTest::gtest_main)
 include(GoogleTest)
 gtest_discover_tests(aero_tests)
